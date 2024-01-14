@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20240110 13:19:31.479" schemaversion="2" generator="Robot 4.1.3 (Python 2.7.17 on linux2)">
+<suite source="/home/priscila/projetos/curso_udemy/RobotFramework/APITESTING/tests/api_testing_usuarios.robot" id="s1" name="Api Testing Usuarios">
+<test id="s1-t1" name="Cenario 01: Cadastrar um novo usuário com sucesso da Serverest">
+<kw name="Criar um usuário novo" library="api_testing_usuarios">
+<kw name="Generate Random String" library="String">
+<var>${palavra_aleatoria}</var>
+<arg>length=4</arg>
+<arg>chars=[LETTERS]</arg>
+<doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
+<msg timestamp="20240110 13:19:31.563" level="INFO">${palavra_aleatoria} = thBd</msg>
+<status status="PASS" endtime="20240110 13:19:31.563" starttime="20240110 13:19:31.562"/>
+</kw>
+<kw name="Convert To Lower Case" library="String">
+<var>${palavra_aleatoria}</var>
+<arg>${palavra_aleatoria}</arg>
+<doc>Converts string to lower case.</doc>
+<msg timestamp="20240110 13:19:31.563" level="INFO">${palavra_aleatoria} = thbd</msg>
+<status status="PASS" endtime="20240110 13:19:31.563" starttime="20240110 13:19:31.563"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${nome_teste}</arg>
+<arg>${palavra_aleatoria}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20240110 13:19:31.565" level="INFO">${nome_teste} = thbd</msg>
+<status status="PASS" endtime="20240110 13:19:31.565" starttime="20240110 13:19:31.563"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${email_teste}</arg>
+<arg>${palavra_aleatoria}@emailtest.com</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20240110 13:19:31.566" level="INFO">${email_teste} = thbd@emailtest.com</msg>
+<status status="PASS" endtime="20240110 13:19:31.566" starttime="20240110 13:19:31.565"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>email aleatorio com letras minusculas setado em uma variavel ${email_teste}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240110 13:19:31.566" level="INFO">email aleatorio com letras minusculas setado em uma variavel thbd@emailtest.com</msg>
+<status status="PASS" endtime="20240110 13:19:31.567" starttime="20240110 13:19:31.566"/>
+</kw>
+<status status="PASS" endtime="20240110 13:19:31.567" starttime="20240110 13:19:31.562"/>
+</kw>
+<kw name="Cadastrar o usuário criado na Serverest" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${body}</var>
+<arg>nome=${nome_teste}</arg>
+<arg>email=${email_teste}</arg>
+<arg>password="teste"</arg>
+<arg>administrador=true</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20240110 13:19:31.569" level="INFO">${body} = {u'nome': u'thbd', u'email': u'thbd@emailtest.com', u'password': u'"teste"', u'administrador': u'true'}</msg>
+<status status="PASS" endtime="20240110 13:19:31.570" starttime="20240110 13:19:31.568"/>
+</kw>
+<kw name="Criar sessao da Serverest" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20240110 13:19:31.571" level="INFO">${headers} = {u'accept': u'application/json', u'Content-Type': u'application/json'}</msg>
+<status status="PASS" endtime="20240110 13:19:31.571" starttime="20240110 13:19:31.570"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=Serverest</arg>
+<arg>url=https://serverest.dev/</arg>
+<arg>headers=${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20240110 13:19:31.572" level="INFO">Creating Session using : alias=Serverest, url=https://serverest.dev/, headers={u'accept': u'application/json', u'Content-Type': u'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20240110 13:19:31.573" starttime="20240110 13:19:31.571"/>
+</kw>
+<status status="PASS" endtime="20240110 13:19:31.573" starttime="20240110 13:19:31.570"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>alias=Serverest</arg>
+<arg>url=/usuarios</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20240110 13:19:31.957" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'Content-Length': '97', 'Accept-Encoding': 'gzip, deflate', 'accept': u'application/json', 'User-Agent': 'python-requests/2.27.1', 'Connection': 'keep-alive', 'Content-Type': u'application/json'} 
+ body={"nome": "thbd", "email": "thbd@emailtest.com", "password": "\"teste\"", "administrador": "true"} 
+ </msg>
+<msg timestamp="20240110 13:19:31.957" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'Content-Length': '82', 'x-xss-protection': '1; mode=block', 'x-content-type-options': 'nosniff', 'x-download-options': 'noopen', 'content-type': 'application/json; charset=utf-8', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'Server': 'Google Frontend', 'X-Cloud-Trace-Context': '71d9b1316c3e7db0943a512ee4659431;o=1', 'Date': 'Wed, 10 Jan 2024 16:19:31 GMT', 'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "quT0Iz6wAjaMcQ8v"
+} 
+ </msg>
+<msg timestamp="20240110 13:19:31.957" level="INFO">/usr/local/lib/python2.7/dist-packages/urllib3/connectionpool.py:1068: InsecureRequestWarning: Unverified HTTPS request is being made to host 'serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/1.26.x/advanced-usage.html#ssl-warnings
+  InsecureRequestWarning,</msg>
+<msg timestamp="20240110 13:19:31.958" level="INFO">${resposta} = &lt;Response [201]&gt;</msg>
+<status status="PASS" endtime="20240110 13:19:31.958" starttime="20240110 13:19:31.573"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${resposta.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240110 13:19:31.963" level="INFO">{u'message': u'Cadastro realizado com sucesso', u'_id': u'quT0Iz6wAjaMcQ8v'}</msg>
+<status status="PASS" endtime="20240110 13:19:31.963" starttime="20240110 13:19:31.959"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<arg>${resposta.json()}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<msg timestamp="20240110 13:19:31.970" level="INFO">${RESPOSTA} = {u'message': u'Cadastro realizado com sucesso', u'_id': u'quT0Iz6wAjaMcQ8v'}</msg>
+<status status="PASS" endtime="20240110 13:19:31.970" starttime="20240110 13:19:31.964"/>
+</kw>
+<status status="PASS" endtime="20240110 13:19:31.971" starttime="20240110 13:19:31.567"/>
+</kw>
+<kw name="Conferir se o usuário foi cadastrado corretamente" library="api_testing_usuarios">
+<kw name="Log" library="BuiltIn">
+<arg>${RESPOSTA}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20240110 13:19:31.975" level="INFO">{u'message': u'Cadastro realizado com sucesso', u'_id': u'quT0Iz6wAjaMcQ8v'}</msg>
+<status status="PASS" endtime="20240110 13:19:31.975" starttime="20240110 13:19:31.974"/>
+</kw>
+<kw name="Dictionary Should Contain Item" library="Collections">
+<arg>${RESPOSTA}</arg>
+<arg>message</arg>
+<arg>Cadastro realizado com sucesso</arg>
+<doc>An item of ``key`` / ``value`` must be found in a ``dictionary``.</doc>
+<status status="PASS" endtime="20240110 13:19:31.977" starttime="20240110 13:19:31.976"/>
+</kw>
+<kw name="Dictionary Should Contain Key" library="Collections">
+<arg>${RESPOSTA}</arg>
+<arg>_id</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="PASS" endtime="20240110 13:19:31.980" starttime="20240110 13:19:31.978"/>
+</kw>
+<status status="PASS" endtime="20240110 13:19:31.981" starttime="20240110 13:19:31.972"/>
+</kw>
+<status status="PASS" endtime="20240110 13:19:31.982" starttime="20240110 13:19:31.561"/>
+</test>
+<status status="PASS" endtime="20240110 13:19:31.983" starttime="20240110 13:19:31.480"/>
+</suite>
+<statistics>
+<total>
+<stat fail="0" skip="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" skip="0" id="s1" name="Api Testing Usuarios" pass="1">Api Testing Usuarios</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
